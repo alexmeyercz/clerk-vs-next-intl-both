@@ -1,3 +1,4 @@
+import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 
 import '../globals.css'
@@ -15,8 +16,10 @@ export default function LocaleLayout({
   params: { locale: string }
 }>) {
   return (
-    <html lang={locale}>
-      <body>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang={locale}>
+        <body>{children}</body>
+      </html>
+    </ClerkProvider>
   )
 }

@@ -1,11 +1,18 @@
+import { authMiddleware } from '@clerk/nextjs'
 import createMiddleware from 'next-intl/middleware'
 
-export default createMiddleware({
-  // A list of all locales that are supported
+const intlMiddleware = createMiddleware({
   locales: ['en', 'de'],
-
-  // Used when no locale matches
   defaultLocale: 'en',
+})
+
+export default authMiddleware({
+  beforeAuth(request) {
+    return intlMiddleware(request)
+  },
+
+  // Ensure that locale-specific sign in pages are public
+  publicRoutes: ['/:locale', '/:locale/sign-in'],
 })
 
 export const config = {
